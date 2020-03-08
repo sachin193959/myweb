@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Git Clone') { 
             steps {
-                git credentialsId: '9623d212-3904-452e-8b8a-673356f55a90', url: 'https://github.com/sachin193959/simple-java-maven-app.git'
+                git credentialsId: '9623d212-3904-452e-8b8a-673356f55a90', url: 'https://github.com/sachin193959/myweb.git'
                 
                  }
             }
