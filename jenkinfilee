@@ -21,7 +21,7 @@ pipeline {
               }
            }
            
-           sshagent(['dev']) {
+           stage(['dev']) {
                    steps{
                 sshagent(['dev']) {
                    sh """
