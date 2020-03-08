@@ -1,0 +1,31 @@
+node{
+ 
+   stage('SCM Checkout'){
+                       git credentialsId: '9623d212-3904-452e-8b8a-673356f55a90', url: 'https://github.com/sachin193959/myweb.git'
+   }
+  stage('Maven Build') { 
+            steps {
+                  sh "mvn clean package"
+                  sh "mv target/*.war target/myweb.war"
+   }
+   stage('Build Docker Image'){
+     sh 'docker build -t sachin193959/myweb:5.0.0 .'
+   }
+   stage('Upload To DockerHub'){
+      withCredentials([string(credentialsId: 'dockerhub', variable: 'Docker')]) {
+      sh "docker login -u sachin193959 -p ${Docker}"
+    }
+      sh "docker push sachin193959/myweb:5.0.0"
+   }
+   
+   stage('Deploy to Dev'){
+       sshagent(['dockerserver']) {
+	   def dockeRm = "ssh ubuntu@3.89.181.199 docker rm -f myweb"
+	   def dockeRun = "ssh ubuntu@3.89.181.199 docker run -d -p 80:8080 --name myweb sachin193959/myweb:5.0.0"
+	   sh "${dockeRm}"
+	   sh "${dockeRun}"	
+	  }
+   }
+   
+}
+	
