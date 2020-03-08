@@ -1,12 +1,11 @@
-pipeline {
-    agent any
-    stages {
+node{
+
    stage('SCM Checkout'){
                        git credentialsId: '9623d212-3904-452e-8b8a-673356f55a90', url: 'https://github.com/sachin193959/myweb.git'
    }
   stage('Maven Build') { 
-            steps {
-                  sh "mvn clean package"
+       
+                 sh "mvn clean package"
                   sh "mv target/*.war target/myweb.war"
    }
    stage('Build Docker Image'){
@@ -31,4 +30,4 @@ pipeline {
    }
 
    }
-}
+
