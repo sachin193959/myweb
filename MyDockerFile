@@ -14,7 +14,6 @@ node{
    stage('Upload To DockerHub'){
       withCredentials([string(credentialsId: 'dockerhub', variable: 'Docker')]) {
       sh "docker login -u sachin193959 -p ${Docker}"
-    }
       sh "docker push sachin193959/myweb:5.0.0"
    }
    
@@ -29,4 +28,4 @@ node{
 
    }
 
-   }
+   
